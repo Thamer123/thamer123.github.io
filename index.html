@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechGuide Kef — Centre d'Encadrement Universitaire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Kufi+Arabic:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --card: #151d2e;
+      --accent: #00d4ff;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --text: #e8edf5;
+      --text-muted: #8892a4;
+      --border: rgba(0,212,255,0.15);
+      --font-en: 'Syne', sans-serif;
+      --font-ar: 'Noto Kufi Arabic', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    /* ── BG EFFECTS ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 10% 10%, rgba(0,212,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 90% 80%, rgba(124,58,237,0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(10,14,26,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: var(--font-en);
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+      color: var(--accent);
+    }
+    .logo span { color: var(--text); }
+
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .lang-toggle {
+      display: flex; gap: 0.5rem;
+    }
+    .lang-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all .2s;
+    }
+    .lang-btn.active, .lang-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:.4; transform:scale(1.4); }
+    }
+
+    .hero h1 {
+      font-family: var(--font-en);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-ar {
+      font-family: var(--font-ar);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--text-muted);
+      margin: 0.8rem 0 1.5rem;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero p {
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .hero-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #0099bb);
+      color: var(--bg);
+      padding: 0.85rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 30px rgba(0,212,255,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,212,255,0.5); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── STATS ── */
+    .stats {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px; margin: 0 auto;
+      padding: 0 2rem 5rem;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform .2s;
+    }
+    .stat-card:hover { transform: translateY(-4px); }
+    .stat-num {
+      font-family: var(--font-en);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem; }
+    .stat-label-ar { font-family: var(--font-ar); font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; padding: 5rem 2rem; }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-family: var(--font-en);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .section-title .ar {
+      font-family: var(--font-ar);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+    .section-title .line {
+      width: 50px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transition: transform .3s;
+    }
+    .service-card:hover { transform: translateY(-6px); border-color: rgba(0,212,255,0.4); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .service-card h3 {
+      font-family: var(--font-en);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .service-card .ar-title {
+      font-family: var(--font-ar);
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+    .service-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── INSCRIPTION ── */
+    #inscription { background: var(--surface); }
+
+    .form-container {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      display: flex; flex-direction: column; gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    label .ar-label {
+      font-family: var(--font-ar);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-right: 0.3rem;
+    }
+
+    input, select, textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: border-color .2s;
+      outline: none;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
+    }
+    select option { background: var(--bg); }
+    textarea { resize: vertical; min-height: 100px; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--accent), #0099bb);
+      color: var(--bg);
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-en);
+      font-weight: 800;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 0 30px rgba(0,212,255,0.25);
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,212,255,0.4); }
+
+    .success-msg {
+      display: none;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid var(--accent3);
+      color: var(--accent3);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    /* ── TARIFS ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px; margin: 0 auto;
+    }
+
+    .price-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all .3s;
+    }
+    .price-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 40px rgba(0,212,255,0.15);
+      position: relative;
+    }
+    .price-card.featured::after {
+      content: '⭐ Recommandé';
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 1rem;
+      border-radius: 50px;
+    }
+    .price-card:hover { transform: translateY(-5px); }
+    .price-card h3 {
+      font-family: var(--font-en);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .price-card .ar-name {
+      font-family: var(--font-ar);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+    }
+    .price-num {
+      font-family: var(--font-en);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .price-num span { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
+    .price-features {
+      list-style: none;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+    .price-features li {
+      padding: 0.4rem 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex; gap: 0.5rem; align-items: flex-start;
+    }
+    .price-features li::before { content: '✓'; color: var(--accent3); font-weight: 700; flex-shrink: 0; }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 800px; margin: 0 auto;
+    }
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      text-align: center;
+      transition: all .3s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .contact-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .contact-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .contact-card h4 {
+      font-family: var(--font-en);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .contact-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    footer .logo { display: block; margin-bottom: 0.5rem; font-size: 1.2rem; }
+    footer p { color: var(--text-muted); font-size: 0.85rem; }
+    .footer-ar { font-family: var(--font-ar); color: var(--text-muted); font-size: 0.85rem; margin-top: 0.3rem; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 1rem; }
+      .nav-links { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── ARABIC RTL OVERRIDES ── */
+    body.ar-active {
+      font-family: var(--font-ar);
+    }
+    body.ar-active .hero h1,
+    body.ar-active .service-card h3,
+    body.ar-active .section-title h2 {
+      font-family: var(--font-ar);
+      letter-spacing: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Tech<span>Guide</span> Kef</div>
+  <ul class="nav-links">
+    <li><a href="#services" data-fr="Services" data-ar="الخدمات">Services</a></li>
+    <li><a href="#inscription" data-fr="Inscription" data-ar="التسجيل">Inscription</a></li>
+    <li><a href="#tarifs" data-fr="Tarifs" data-ar="الأسعار">Tarifs</a></li>
+    <li><a href="#contact" data-fr="Contact" data-ar="تواصل">Contact</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('ar')">AR</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge" id="badge">🎓 Centre d'Encadrement — Kef, Tunisie</div>
+    <h1 id="hero-title">Réussissez avec<br><span class="highlight">TechGuide Kef</span></h1>
+    <p class="hero-ar" id="hero-ar">مركز تأطير متخصص في الإعلامية والتكنولوجيا — الكاف</p>
+    <p id="hero-desc">Encadrement universitaire spécialisé en Informatique & Technologie. Projets PFE, cours particuliers, suivi personnalisé à Kef.</p>
+    <div class="hero-btns">
+      <a href="#inscription" class="btn-primary" id="btn-inscrire">S'inscrire maintenant</a>
+      <a href="#services" class="btn-secondary" id="btn-services">Voir les services</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat-card">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Suivi Personnalisé</div>
+    <div class="stat-label-ar">متابعة شخصية</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">PFE</div>
+    <div class="stat-label">Encadrement Projets</div>
+    <div class="stat-label-ar">إشراف على المشاريع</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">24h</div>
+    <div class="stat-label">Réponse Rapide</div>
+    <div class="stat-label-ar">رد سريع</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">Kef</div>
+    <div class="stat-label">Bureau Local</div>
+    <div class="stat-label-ar">مكتب محلي</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-title reveal">
+    <h2 id="services-title">Nos Services</h2>
+    <p class="ar" id="services-ar-title">خدماتنا</p>
+    <div class="line"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">💻</div>
+      <h3>Encadrement PFE</h3>
+      <div class="ar-title">إشراف على مشاريع التخرج</div>
+      <p>Accompagnement complet pour votre projet de fin d'études : méthodologie, code, rapport et soutenance.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📚</div>
+      <h3>Cours Particuliers</h3>
+      <div class="ar-title">دروس خصوصية</div>
+      <p>Cours individuels en programmation (Python, Java, C, Web), base de données, algorithmes et réseaux.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🎯</div>
+      <h3>Préparation Examens</h3>
+      <div class="ar-title">التحضير للامتحانات</div>
+      <p>Révision ciblée, exercices et entraînements pour maximiser vos résultats aux examens universitaires.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🌐</div>
+      <h3>Développement Web</h3>
+      <div class="ar-title">تطوير الويب</div>
+      <p>Initiation et approfondissement : HTML, CSS, JavaScript, React, PHP, et développement full-stack.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🗄️</div>
+      <h3>Bases de Données</h3>
+      <div class="ar-title">قواعد البيانات</div>
+      <p>MySQL, Oracle, PostgreSQL — conception, requêtes SQL, optimisation et projets pratiques.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📊</div>
+      <h3>Suivi de Stage</h3>
+      <div class="ar-title">متابعة التربص</div>
+      <p>Orientation et soutien pendant votre stage : rapport, présentation et développement professionnel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INSCRIPTION -->
+<section id="inscription">
+  <div class="section-title reveal">
+    <h2 id="insc-title">Inscription en Ligne</h2>
+    <p class="ar" id="insc-ar">التسجيل عبر الإنترنت</p>
+    <div class="line"></div>
+  </div>
+  <div class="form-container reveal">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Prénom <span class="ar-label">الاسم</span></label>
+        <input type="text" id="prenom" placeholder="Votre prénom" />
+      </div>
+      <div class="form-group">
+        <label>Nom <span class="ar-label">اللقب</span></label>
+        <input type="text" id="nom" placeholder="Votre nom" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email <span class="ar-label">البريد الإلكتروني</span></label>
+      <input type="email" id="email" placeholder="votre@email.com" />
+    </div>
+    <div class="form-group">
+      <label>Téléphone <span class="ar-label">الهاتف</span></label>
+      <input type="tel" id="tel" placeholder="+216 XX XXX XXX" />
+    </div>
+    <div class="form-group">
+      <label>Niveau / Spécialité <span class="ar-label">المستوى / التخصص</span></label>
+      <select id="niveau">
+        <option value="">-- Sélectionnez --</option>
+        <option>Licence 1 — Informatique</option>
+        <option>Licence 2 — Informatique</option>
+        <option>Licence 3 — Informatique (PFE)</option>
+        <option>Master 1</option>
+        <option>Master 2 (PFE)</option>
+        <option>Autre</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Service souhaité <span class="ar-label">الخدمة المطلوبة</span></label>
+      <select id="service">
+        <option value="">-- Sélectionnez --</option>
+        <option>Encadrement PFE</option>
+        <option>Cours Particuliers</option>
+        <option>Préparation Examens</option>
+        <option>Développement Web</option>
+        <option>Bases de Données</option>
+        <option>Suivi de Stage</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Message (facultatif) <span class="ar-label">رسالة</span></label>
+      <textarea id="message" placeholder="Décrivez votre besoin..."></textarea>
+    </div>
+    <button class="submit-btn" onclick="submitForm()" id="submit-btn">
+      ✉️ Envoyer ma demande d'inscription
+    </button>
+    <div class="success-msg" id="success-msg">
+      ✅ Demande envoyée avec succès ! Nous vous contacterons dans les 24h.<br>
+      <span style="font-family: var(--font-ar)">تم إرسال طلبك بنجاح! سنتواصل معك خلال 24 ساعة.</span>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section id="tarifs">
+  <div class="section-title reveal">
+    <h2 id="tarifs-title">Nos Tarifs</h2>
+    <p class="ar" id="tarifs-ar">الأسعار</p>
+    <div class="line"></div>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <h3>Séance Unique</h3>
+      <div class="ar-name">جلسة واحدة</div>
+      <div class="price-num">25 <span>DT / séance</span></div>
+      <ul class="price-features">
+        <li>1 séance de 2h</li>
+        <li>Cours ou exercices ciblés</li>
+        <li>Support de cours fourni</li>
+        <li>Sans engagement</li>
+      </ul>
+      <a href="#inscription" class="btn-secondary" style="display:block; text-align:center; margin-top:1rem;">S'inscrire</a>
+    </div>
+    <div class="price-card featured reveal">
+      <h3>Pack Mensuel</h3>
+      <div class="ar-name">الحزمة الشهرية</div>
+      <div class="price-num">150 <span>DT / mois</span></div>
+      <ul class="price-features">
+        <li>8 séances par mois</li>
+        <li>Suivi personnalisé continu</li>
+        <li>Correction devoirs & projets</li>
+        <li>Contact WhatsApp illimité</li>
+        <li>Bilan mensuel de progression</li>
+      </ul>
+      <a href="#inscription" class="btn-primary" style="display:block; text-align:center; margin-top:1rem;">S'inscrire</a>
+    </div>
+    <div class="price-card reveal">
+      <h3>Encadrement PFE</h3>
+      <div class="ar-name">إشراف مشروع التخرج</div>
+      <div class="price-num">200 <span>DT / projet</span></div>
+      <ul class="price-features">
+        <li>Suivi complet du projet</li>
+        <li>Aide mémoire & rapport</li>
+        <li>Préparation soutenance</li>
+        <li>Correction code source</li>
+      </ul>
+      <a href="#inscription" class="btn-secondary" style="display:block; text-align:center; margin-top:1rem;">S'inscrire</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background: var(--surface);">
+  <div class="section-title reveal">
+    <h2 id="contact-title">Nous Contacter</h2>
+    <p class="ar" id="contact-ar">تواصل معنا</p>
+    <div class="line"></div>
+  </div>
+  <div class="contact-grid">
+    <a href="https://wa.me/21600000000" class="contact-card reveal" target="_blank">
+      <div class="contact-icon">💬</div>
+      <h4>WhatsApp</h4>
+      <p>+216 XX XXX XXX</p>
+      <p style="color: var(--accent3); font-size:0.8rem; margin-top:0.3rem;">Réponse rapide</p>
+    </a>
+    <a href="mailto:techguidekef@gmail.com" class="contact-card reveal">
+      <div class="contact-icon">📧</div>
+      <h4>Email</h4>
+      <p>techguidekef@gmail.com</p>
+    </a>
+    <div class="contact-card reveal">
+      <div class="contact-icon">📍</div>
+      <h4>Bureau</h4>
+      <p>Kef, Tunisie</p>
+      <p style="font-family: var(--font-ar); font-size:0.85rem; color: var(--text-muted); margin-top:0.3rem;">الكاف، تونس</p>
+    </div>
+    <div class="contact-card reveal">
+      <div class="contact-icon">🕐</div>
+      <h4>Horaires</h4>
+      <p>Lun — Sam : 9h – 18h</p>
+      <p style="font-family: var(--font-ar); font-size:0.85rem; color: var(--text-muted); margin-top:0.3rem;">الإثنين — السبت</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo">TechGuide Kef</span>
+  <p>© 2025 TechGuide Kef — Centre d'Encadrement Universitaire en Informatique</p>
+  <p class="footer-ar">مركز تأطير جامعي متخصص في الإعلامية — الكاف، تونس</p>
+</footer>
+
+<script>
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(r => observer.observe(r));
+
+// ── FORM SUBMIT ──
+function submitForm() {
+  const prenom = document.getElementById('prenom').value.trim();
+  const nom    = document.getElementById('nom').value.trim();
+  const email  = document.getElementById('email').value.trim();
+  const tel    = document.getElementById('tel').value.trim();
+  const niveau = document.getElementById('niveau').value;
+  const service= document.getElementById('service').value;
+
+  if (!prenom || !nom || !email || !tel || !niveau || !service) {
+    alert('⚠️ Veuillez remplir tous les champs obligatoires.\nيرجى ملء جميع الحقول الإلزامية.');
+    return;
+  }
+  document.getElementById('success-msg').style.display = 'block';
+  document.getElementById('submit-btn').disabled = true;
+  document.getElementById('submit-btn').textContent = '✅ Envoyé !';
+  document.getElementById('submit-btn').style.background = 'linear-gradient(135deg, #10b981, #059669)';
+}
+
+// ── LANG TOGGLE ──
+const translations = {
+  fr: {
+    badge: '🎓 Centre d\'Encadrement — Kef, Tunisie',
+    heroTitle: 'Réussissez avec<br><span class="highlight">TechGuide Kef</span>',
+    heroDesc: 'Encadrement universitaire spécialisé en Informatique & Technologie. Projets PFE, cours particuliers, suivi personnalisé à Kef.',
+    btnInscrire: 'S\'inscrire maintenant',
+    btnServices: 'Voir les services',
+    servicesTitle: 'Nos Services',
+    inscTitle: 'Inscription en Ligne',
+    tarifsTitle: 'Nos Tarifs',
+    contactTitle: 'Nous Contacter',
+    submitBtn: '✉️ Envoyer ma demande d\'inscription',
+    navLinks: ['Services', 'Inscription', 'Tarifs', 'Contact'],
+  },
+  ar: {
+    badge: '🎓 مركز التأطير — الكاف، تونس',
+    heroTitle: 'انجح مع<br><span class="highlight">TechGuide Kef</span>',
+    heroDesc: 'تأطير جامعي متخصص في الإعلامية والتكنولوجيا — مشاريع التخرج، دروس خصوصية، متابعة شخصية في الكاف.',
+    btnInscrire: 'سجّل الآن',
+    btnServices: 'اكتشف الخدمات',
+    servicesTitle: 'خدماتنا',
+    inscTitle: 'التسجيل عبر الإنترنت',
+    tarifsTitle: 'الأسعار',
+    contactTitle: 'تواصل معنا',
+    submitBtn: '✉️ إرسال طلب التسجيل',
+    navLinks: ['الخدمات', 'التسجيل', 'الأسعار', 'تواصل'],
+  }
+};
+
+function setLang(lang) {
+  const t = translations[lang];
+  document.getElementById('badge').textContent = t.badge;
+  document.getElementById('hero-title').innerHTML = t.heroTitle;
+  document.getElementById('hero-desc').textContent = t.heroDesc;
+  document.getElementById('btn-inscrire').textContent = t.btnInscrire;
+  document.getElementById('btn-services').textContent = t.btnServices;
+  document.getElementById('services-title').textContent = t.servicesTitle;
+  document.getElementById('insc-title').textContent = t.inscTitle;
+  document.getElementById('tarifs-title').textContent = t.tarifsTitle;
+  document.getElementById('contact-title').textContent = t.contactTitle;
+  document.getElementById('submit-btn').innerHTML = t.submitBtn;
+
+  const navAs = document.querySelectorAll('.nav-links a');
+  navAs.forEach((a, i) => { if (t.navLinks[i]) a.textContent = t.navLinks[i]; });
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+}
+</script>
+</body>
+</html>
